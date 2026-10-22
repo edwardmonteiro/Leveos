@@ -1,0 +1,5 @@
+_build/
+output/
+*.iso
+*.sha256
+.DS_Store

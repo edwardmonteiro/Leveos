@@ -1,0 +1,31 @@
+#!/bin/sh
+set -eu
+help() {
+cat <<'TXT'
+OpenClaw is opt-in, never auto-starts:
+  leveos claw version     Print version
+  leveos claw setup       Interactive onboarding
+  leveos claw audit       Security audit
+  leveos claw doctor      Diagnostics
+  leveos claw start       Foreground gateway (Ctrl+C to stop)
+  leveos claw status      Gateway status
+  leveos claw dashboard   Local dashboard
+TXT
+}
+case "${1:-help}" in help|-h|--help) help; exit 0 ;; esac
+command -v openclaw >/dev/null 2>&1 || { echo 'Install claw profile first.' >&2; exit 1; }
+[ "$(id -u)" -ne 0 ] || { echo 'Refusing to run an agent as root.' >&2; exit 1; }
+case "$1" in
+  version) exec openclaw --version ;;
+  setup) exec openclaw onboard ;;
+  audit) exec openclaw security audit ;;
+  doctor) exec openclaw doctor ;;
+  start) exec openclaw gateway ;;
+  status) exec openclaw gateway status ;;
+  dashboard)
+    if [ -z "${DISPLAY:-}" ]; then
+      echo 'Use leveos gui, then openclaw dashboard.'
+      echo 'Default localhost UI: http://127.0.0.1:18789/'
+    else exec openclaw dashboard; fi ;;
+  *) help; exit 2 ;;
+esac

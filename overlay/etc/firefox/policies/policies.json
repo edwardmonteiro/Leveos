@@ -1,0 +1,13 @@
+{
+  "policies": {
+    "DisableTelemetry": true,
+    "DisableFirefoxStudies": true,
+    "DisablePocket": true,
+    "DisableFirefoxAccounts": true,
+    "Homepage": {
+      "URL": "file:///usr/local/share/leveos/home.html",
+      "Locked": false,
+      "StartPage": "homepage"
+    }
+  }
+}

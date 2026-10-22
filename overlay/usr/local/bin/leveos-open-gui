@@ -1,0 +1,5 @@
+#!/bin/sh
+set -eu
+url="${2:-file:///usr/local/share/leveos/home.html}"
+if [ "${1:-lite}" = full ]; then exec firefox-esr --new-window "$url"; fi
+exec netsurf-gtk "$url"

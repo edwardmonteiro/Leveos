@@ -1,0 +1,53 @@
+name: LeveOS ISO
+on:
+  workflow_dispatch:
+    inputs:
+      profile:
+        description: 'Edição do sistema'
+        required: true
+        type: choice
+        default: lite
+        options:
+          - lite
+          - web
+          - claw
+      installer:
+        description: 'Incluir instalador Debian Live'
+        type: boolean
+        default: false
+jobs:
+  iso:
+    runs-on: ubuntu-24.04
+    timeout-minutes: 180
+    permissions:
+      contents: read
+    steps:
+      - uses: actions/checkout@v4
+      - name: Build Debian 13 amd64
+        shell: bash
+        env:
+          PROFILE: ${{ inputs.profile }}
+          INSTALLER: ${{ inputs.installer }}
+        run: |
+          set -Eeuo pipefail
+          docker run --rm --privileged \
+            -v "$GITHUB_WORKSPACE:/src" -w /src \
+            -e PROFILE -e INSTALLER debian:trixie bash -ec '
+              export DEBIAN_FRONTEND=noninteractive
+              apt-get update
+              apt-get install -y --no-install-recommends live-build debootstrap squashfs-tools xorriso ca-certificates python3
+              ./validate.sh
+              args=(--profile "$PROFILE")
+              if [ "$INSTALLER" = true ]; then args+=(--installer); fi
+              ./build.sh "${args[@]}"
+            '
+      - name: Publicar ISO e checksums
+        uses: actions/upload-artifact@v4
+        with:
+          name: LeveOS-${{ inputs.profile }}-amd64
+          path: |
+            output/*.iso
+            output/*.sha256
+            output/*.build.log
+          if-no-files-found: error
+          compression-level: 0

@@ -1,0 +1,27 @@
+#!/bin/sh
+set -eu
+mode=lite
+case "${1:-}" in
+  --text) mode=text; shift ;;
+  --full) mode=full; shift ;;
+  --lite) shift ;;
+esac
+[ "$#" -le 1 ] || { echo 'Provide one URL.' >&2; exit 2; }
+url="${1:-file:///usr/local/share/leveos/home.html}"
+case "$url" in
+ http://*|https://*|file://*) ;;
+ *) echo 'URLs must start http:// https:// or file://' >&2; exit 2 ;;
+esac
+if [ "$mode" = text ]; then
+ [ "$#" -gt 0 ] || url='https://duckduckgo.com/lite/'
+ exec w3m "$url"
+fi
+if [ "$mode" = full ] && ! command -v firefox-esr >/dev/null 2>&1; then
+ echo 'Firefox missing; choose web/claw profile or install firefox-esr.' >&2; exit 1
+fi
+if [ -n "${DISPLAY:-}" ]; then
+ if [ "$mode" = full ]; then exec firefox-esr --new-window "$url"; fi
+ exec netsurf-gtk "$url"
+fi
+export LEVEOS_OPEN_MODE="$mode" LEVEOS_OPEN_URL="$url"
+exec startx

@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<JWM>
+  <RootMenu onroot="12" height="22">
+    <Program label="Terminal">xterm -ls</Program>
+    <Program label="NetSurf">leveos-browser</Program>
+    <Program label="Firefox ESR">leveos-browser --full</Program>
+    <Program label="OpenClaw (Claw edition)">xterm -e leveos claw help</Program>
+    <Separator/>
+    <Exit label="Sair para CLI" confirm="false"/>
+  </RootMenu>
+  <Tray x="0" y="-1" height="30">
+    <TrayButton label="LeveOS">root:1</TrayButton>
+    <TaskList maxwidth="260"/>
+    <Clock format="%H:%M"/>
+  </Tray>
+  <WindowStyle>
+    <Font>DejaVu Sans-10</Font>
+    <Active><Text>#f3f6fa</Text><Title>#243349</Title><Outline>#526478</Outline></Active>
+    <Inactive><Text>#cbd5e1</Text><Title>#192535</Title><Outline>#2d3748</Outline></Inactive>
+  </WindowStyle>
+  <TaskListStyle><Font>DejaVu Sans-10</Font></TaskListStyle>
+  <TrayStyle><Background>#122033</Background><Foreground>#e2e8f0</Foreground></TrayStyle>
+  <PopupStyle><Font>DejaVu Sans-10</Font></PopupStyle>
+</JWM>

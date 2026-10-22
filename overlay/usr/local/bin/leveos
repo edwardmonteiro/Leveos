@@ -1,0 +1,26 @@
+#!/bin/sh
+set -eu
+help() {
+cat <<'TXT'
+LeveOS 0.3 — CLI first
+  leveos help             Help
+  leveos status           Memory, disk, processes
+  leveos wifi             NetworkManager Wi-Fi setup
+  leveos gui              X11/JWM on demand
+  leveos web [URL]        NetSurf
+  leveos text [URL]       W3M
+  leveos full [URL]       Firefox ESR (web/claw profiles)
+  leveos claw [command]   OpenClaw (claw profile)
+TXT
+}
+case "${1:-help}" in
+  help|-h|--help) help ;;
+  status) free -h; uptime; df -h /; ps -eo pid,comm,rss --sort=-rss | head -n 12 ;;
+  wifi) exec nmtui ;;
+  gui) exec startx ;;
+  web) shift; exec leveos-browser "$@" ;;
+  text) shift; exec leveos-browser --text "$@" ;;
+  full) shift; exec leveos-browser --full "$@" ;;
+  claw) shift; exec leveos-claw "$@" ;;
+  *) echo "Unknown command: $1" >&2; help; exit 2 ;;
+esac

@@ -1,0 +1,20 @@
+#!/bin/bash
+# Runs inside the build chroot; does not configure accounts or services.
+set -Eeuo pipefail
+export DEBIAN_FRONTEND=noninteractive
+apt-get update
+apt-get install -y --no-install-recommends bash curl ca-certificates tar xz-utils python3 make g++
+curl --fail --silent --show-error --location --retry 3 \
+  --proto '=https' --tlsv1.2 \
+  https://openclaw.ai/install-cli.sh -o /tmp/leveos-openclaw-install.sh
+bash /tmp/leveos-openclaw-install.sh \
+  --npm --runtime-only --no-onboard \
+  --prefix /opt/leveos-openclaw --version @OPENCLAW_VERSION@
+test -x /opt/leveos-openclaw/bin/openclaw
+# Runtime-only prefix has no user secrets. Open it for unprivileged execution.
+chmod -R a+rX /opt/leveos-openclaw
+ln -sfn /opt/leveos-openclaw/bin/openclaw /usr/local/bin/openclaw
+/usr/local/bin/openclaw --version
+rm -f /tmp/leveos-openclaw-install.sh
+apt-get clean
+rm -rf /var/lib/apt/lists/*
