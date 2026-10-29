@@ -1,0 +1,24 @@
+{
+  "task_id": "001-lite-iso",
+  "schema_version": 1,
+  "phase": "awaiting_shira_synthesis",
+  "owner": "shira",
+  "repository": "edwardmonteiro/Leveos",
+  "branch": "pilot/shira-claude-lite-review",
+  "source_base_commit": "fbeb7ac5aaf9ae269d57864a1526ae45405b9666",
+  "next_action": "Verificar o parecer e apresentar decisões a Edward; não implementar.",
+  "reviewed_input_commit": "ba37a338c7d41635060e298099ef327267fecbbd",
+  "evidence": {
+    "preparation": "Leitura estática dos arquivos citados em spec.md; nenhuma execução de scripts.",
+    "claude_review": "completed_static_review",
+    "iso_build": "not_run",
+    "vm_boot": "not_run",
+    "physical_mac": "not_run"
+  },
+  "human_gate": {
+    "status": "not_requested",
+    "approved_commit": null,
+    "approved_scope": null,
+    "decision_reference": null
+  }
+}
