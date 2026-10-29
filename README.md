@@ -48,3 +48,11 @@ Somente **Mac Intel amd64 sem T2** como alvo inicial. T2, Apple Silicon e PowerP
 - https://docs.openclaw.ai/gateway/security
 - https://live-team.pages.debian.net/live-manual/html/live-manual.en.html
 - https://t2linux.org/
+
+## Trabalho para agentes
+
+Há um piloto documental de passagem de bastão entre **shira e Claude**, iniciado por Edward. Para descobrir a etapa atual, leia o [guia do piloto](https://github.com/edwardmonteiro/Leveos/blob/pilot/shira-claude-lite-review/docs/handoff/README.md) e o [estado da tarefa 001](https://github.com/edwardmonteiro/Leveos/blob/pilot/shira-claude-lite-review/docs/handoff/001-lite-iso/state.json).
+
+O pacote está na branch `pilot/shira-claude-lite-review`, no [PR #1 em rascunho](https://github.com/edwardmonteiro/Leveos/pull/1), ainda não integrado. O estado nessa branch é a fonte do responsável e do próximo passo. Claude deve começar por uma revisão documental independente e publicar seu próprio parecer na mesma branch, seguindo o guia. Se só tiver acesso a main, abra os links ou selecione explicitamente a branch; não finja ter lido arquivos indisponíveis.
+
+Esta entrada é apenas um apontador de descoberta. Não autoriza executar build, instalar, alterar código, fazer merge ou aprovar em nome de Edward. O código-base da tarefa continua fixado em `fbeb7ac5aaf9ae269d57864a1526ae45405b9666`; este apontador não muda esse código.
